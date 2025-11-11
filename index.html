@@ -831,10 +831,39 @@
     }
 
   </script>
-  <audio id="bg-music" autoplay loop>
+  <audio id="bg-music" loop>
   <source src="https://drive.google.com/uc?export=download&id=1zRDHSKkv_dVFoZZEASQ2jH3RP75Sj2VT" type="audio/mp3">
   Your browser does not support the audio element.
-  </audio>
-</body>
+</audio>
+
+<!-- Optional: Play/Pause button -->
+<button id="playMusic" style="position:fixed; bottom:10px; right:10px; padding:8px 12px;">Play Music</button>
+
+<script>
+const music = document.getElementById('bg-music');
+const btn = document.getElementById('playMusic');
+
+// প্রথমে muted করে play চেষ্টা
+music.volume = 0.5;
+music.muted = true;
+
+music.play().then(() => {
+  setTimeout(() => { music.muted = false; }, 500); // 0.5 সেকেন্ড পরে unmute
+}).catch(() => {
+  console.warn("Autoplay blocked. Please click the button.");
+});
+
+// User interaction দিয়ে play/pause control
+btn.addEventListener('click', () => {
+  if (music.paused) {
+    music.play().catch(()=>{});
+    btn.textContent = "Pause Music";
+  } else {
+    music.pause();
+    btn.textContent = "Play Music";
+  }
+});
+</script>
+  </body>
 
 <phone>
